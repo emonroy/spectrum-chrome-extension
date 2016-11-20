@@ -89,7 +89,7 @@ var captionForSpectrumIndex = [
     "LEFT OF CENTER".toUpperCase(),
     "CENTER".toUpperCase(),
     "RIGHT OF CENTER".toUpperCase(),
-    "CENTER".toUpperCase()
+    "RIGHT".toUpperCase()
 ];
 
 var percentageForSpectrumIndex = [
@@ -103,7 +103,7 @@ var percentageForSpectrumIndex = [
 var content = {
     "http://fortune.com/2016/11/19/jeff-sessions-race-civil-rights/": {
         "num_votes": 356,
-        "spectrum_index": 1,
+        "spectrum_index": 3,
         "left_article": {
             "url": "https://www.washingtonpost.com/news/wonk/wp/2016/11/19/how-jeff-sessions-went-from-fringe-figure-to-mainstream-republican",
             "image_url": "https://lh4.ggpht.com/5wzR5Tsj5fQ4Igs1R1HMBep99ufDzMr0028lxn2Ji4GTidrwwMM5D74JvGE6nmH6OcKH=w300",
@@ -121,7 +121,7 @@ var content = {
         }
     },
 
-    "http://www.nytimes.com/2016/11/19/us/politics/jeff-sessions-donald-trump-attorney-general.html": {
+    "https://www.washingtonpost.com/news/wonk/wp/2016/11/19/how-jeff-sessions-went-from-fringe-figure-to-mainstream-republican/": {
         "num_votes": 785,
         "spectrum_index": 1,
         "left_article": {
@@ -175,7 +175,7 @@ var spectrum = {
             this._popup = new Popup(
                 captionForSpectrumIndex[articleData.spectrum_index],
                 articleData.num_votes,
-                percentageForSpectrumIndex[articleData.spectrum_indexs]
+                percentageForSpectrumIndex[articleData.spectrum_index]
             );
             this._$popup = this._popup.getContainer();
             $('body').append(this._$popup);
