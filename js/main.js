@@ -109,7 +109,7 @@ var content = {
             "image_url": "https://lh4.ggpht.com/5wzR5Tsj5fQ4Igs1R1HMBep99ufDzMr0028lxn2Ji4GTidrwwMM5D74JvGE6nmH6OcKH=w300",
             "source": "Washington Post",
             "headline": "How Jeff Sessions went from fringe figure to mainstream Republican",
-            "spectrum_index": 1 
+            "spectrum_index": 1
         },
         "right_article":
         {
@@ -164,51 +164,21 @@ var content = {
 
 var spectrum = {
     init: function(currentUrl) {
-        var url = chrome.extension.getURL('html/main.html');
-        this._$container = render(url);
-        this._$articlesContainer = this._$container.find('#spectrum-articles-container');
-        $('body').append(this._$container);
-
-        this._popup = new Popup(
-            'RIGHT OF CENTER',
-            222,
-            80
-        );
-        this._$popup = this._popup.getContainer();
-        $('body').append(this._$popup);
-
-        var leftArticle = new Article(
-            '#',
-            'TELEGRAPH.CO.UK',
-            'Obama May Jump Into Fray as Democrats Counter Trump',
-            20
-        );
-
-        var rightArticle = new Article(
-            '#',
-            'THE DAILY WIRE',
-            '5 Things You Need To Know About Trump CIA Director Pick Mike Pompeo',
-            80
-        );
-
-        this._$articlesContainer.append(leftArticle.getContainer(), rightArticle.getContainer());
-
-        this._hideIfNecessary(false);
-
-        this._bindEvents();
         var articleData = content[currentUrl];
 
         if (articleData) {
+            var url = chrome.extension.getURL('html/main.html');
             this._$container = render(url);
             this._$articlesContainer = this._$container.find('#spectrum-articles-container');
             $('body').append(this._$container);
 
-            this._$popup = new Popup(
+            this._popup = new Popup(
                 captionForSpectrumIndex[articleData.spectrum_index],
                 articleData.num_votes,
                 percentageForSpectrumIndex[articleData.spectrum_indexs]
             );
-            $('body').append(this._$popup.getContainer());
+            this._$popup = this._popup.getContainer();
+            $('body').append(this._$popup);
 
             var leftArticle = new Article(
                 articleData.left_article.image_url,
@@ -228,7 +198,8 @@ var spectrum = {
 
             this._$articlesContainer.append(leftArticle.getContainer(), rightArticle.getContainer());
 
-            this._$container.hide();
+
+            this._hideIfNecessary(false);
 
             this._bindEvents();
         } else {
