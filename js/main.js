@@ -101,22 +101,22 @@ var spectrum = {
         $('body').append(this._$popup.getContainer());
 
         var leftArticle = new Article(
-            "#",
-            "TELEGRAPH.CO.UK",
-            "Obama May Jump Into Fray as Democrats Counter Trump",
+            '#',
+            'TELEGRAPH.CO.UK',
+            'Obama May Jump Into Fray as Democrats Counter Trump',
             20
         );
 
         var rightArticle = new Article(
-            "#",
-            "THE DAILY WIRE",
-            "5 Things You Need To Know About Trump CIA Director Pick Mike Pompeo",
+            '#',
+            'THE DAILY WIRE',
+            '5 Things You Need To Know About Trump CIA Director Pick Mike Pompeo',
             80
         );
 
         this._$articlesContainer.append(leftArticle.getContainer(), rightArticle.getContainer());
 
-        this._$container.hide();
+        this._hideIfNecessary();
 
         this._bindEvents();
     },
@@ -126,10 +126,14 @@ var spectrum = {
     },
 
     _onScroll: function() {
-        var height = $(document).height();
-        var scrollTop = $(window).scrollTop();
+        this._hideIfNecessary();
+    },
 
-        if (height * 0.7 < scrollTop) {
+    _hideIfNecessary: function() {
+        var height = $(document).height();
+        var scrollBottom = $(window).scrollTop() + $(window).height();
+
+        if (height * 0.75 < scrollBottom) {
             this.showArticles();
         } else {
             this.hideArticles();
