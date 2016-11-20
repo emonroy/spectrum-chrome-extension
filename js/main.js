@@ -175,7 +175,7 @@ var spectrum = {
             this._popup = new Popup(
                 captionForSpectrumIndex[articleData.spectrum_index],
                 articleData.num_votes,
-                percentageForSpectrumIndex[articleData.spectrum_indexs]
+                percentageForSpectrumIndex[articleData.spectrum_index]
             );
             this._$popup = this._popup.getContainer();
             $('body').append(this._$popup);
