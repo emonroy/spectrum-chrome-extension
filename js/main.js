@@ -93,12 +93,13 @@ var spectrum = {
         this._$articlesContainer = this._$container.find('#spectrum-articles-container');
         $('body').append(this._$container);
 
-        this._$popup = new Popup(
+        this._popup = new Popup(
             'RIGHT OF CENTER',
             222,
             80
         );
-        $('body').append(this._$popup.getContainer());
+        this._$popup = this._popup.getContainer();
+        $('body').append(this._$popup);
 
         var leftArticle = new Article(
             '#',
@@ -141,10 +142,14 @@ var spectrum = {
     },
 
     hideArticles: function() {
+        this._$popup.css('top', 'auto');
+        this._$popup.css('bottom', 0);
         this._$container.hide();
     },
 
     showArticles: function() {
+        this._$popup.css('top', 0);
+        this._$popup.css('bottom', 'auto');
         this._$container.show();
     }
 };
