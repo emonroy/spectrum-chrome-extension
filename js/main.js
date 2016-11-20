@@ -16,13 +16,14 @@ var render = function(url, context) {
 
 // Article ---------------------------------------------------------------------
 
-var Article = function(imageUrl, source, headLine, percentage) {
+var Article = function(imageUrl, source, headLine, percentage, url) {
     var url = chrome.extension.getURL("html/article.html");
 
     this._$container = render(url, {
         imageUrl: imageUrl,
         source: source,
-        headLine: headLine
+        headLine: headLine,
+        target_url: url
     });
     this._$meterThumb = this._$container.find('.spectrum-meter-thumb');
 
@@ -83,11 +84,88 @@ Popup.prototype.moveMeterThumb = function(percentage) {
     });
 };
 
+var captionForSpectrumIndex = [
+    "LEFT".toUpperCase(),
+    "LEFT OF CENTER".toUpperCase(),
+    "CENTER".toUpperCase(),
+    "RIGHT OF CENTER".toUpperCase(),
+    "CENTER".toUpperCase()
+];
 
+var percentageForSpectrumIndex = [
+    10,
+    25,
+    50,
+    75,
+    90
+];
+
+var content = {
+    "http://fortune.com/2016/11/19/jeff-sessions-race-civil-rights/": {
+        "num_votes": 356,
+        "spectrum_index": 1,
+        "left_article": {
+            "url": "https://www.washingtonpost.com/news/wonk/wp/2016/11/19/how-jeff-sessions-went-from-fringe-figure-to-mainstream-republican",
+            "image_url": "https://lh4.ggpht.com/5wzR5Tsj5fQ4Igs1R1HMBep99ufDzMr0028lxn2Ji4GTidrwwMM5D74JvGE6nmH6OcKH=w300",
+            "source": "Washington Post",
+            "headline": "How Jeff Sessions went from fringe figure to mainstream Republican",
+            "spectrum_index": 1 
+        },
+        "right_article":
+        {
+            "url": "http://www.nytimes.com/2016/11/19/us/politics/jeff-sessions-donald-trump-attorney-general.html",
+            "image_url": "https://static01.nyt.com/images/icons/t_logo_291_black.png",
+            "source": "New York Times",
+            "headline": "Jeff Sessions, as Attorney General, Could Overhaul Department He’s Skewered",
+            "spectrum_index": 1
+        }
+    },
+
+    "http://www.nytimes.com/2016/11/19/us/politics/jeff-sessions-donald-trump-attorney-general.html": {
+        "num_votes": 785,
+        "spectrum_index": 1,
+        "left_article": {
+            "url": "http://www.foxnews.com/politics/2016/11/19/cities-defend-immigration-sanctuary-policies-under-fire-by-trump.html",
+            "image_url": "http://global.fncstatic.com/static/v/all/img/og/og-fn-foxnews.jpg",
+            "source": "Fox News",
+            "headline": "Cities defend immigration sanctuary policies under fire by Trump",
+            "spectrum_index": 4
+        },
+        "right_article":
+        {
+            "url": "http://www.nationalreview.com/article/442316/attorney-general-jeff-sessions-fair-civil-rights",
+            "image_url": "http://www.nationalreview.com/sites/default/files/logo_nr_social_2016_600_D.jpg",
+            "source": "National Review",
+            "headline": "Jeff Sessions Will Be Just Fine on Civil Rights",
+            "spectrum_index": 4
+        }
+    },
+
+    "http://www.foxnews.com/politics/2016/11/19/cities-defend-immigration-sanctuary-policies-under-fire-by-trump.html": {
+        "num_votes": 127,
+        "spectrum_index": 4,
+        "left_article": {
+            "url": "https://theintercept.com/2016/11/18/donald-trumps-mass-deportations-would-cost-billions-and-take-years-to-process",
+            "image_url": "https://openmedia.org/sites/default/files/TheIntercept_logo-23.png",
+            "source": "The Intercept",
+            "headline": "Donald Trump's Mass Deportations Would Cost Billions and Take Years to Process",
+            "spectrum_index": 1
+        },
+        "right_article":
+        {
+            "url": "http://www.reuters.com/article/us-usa-trump-immigration-idUSKBN13B05C",
+            "image_url": "https://pbs.twimg.com/profile_images/3379693153/1008914c0ae75c9efb5f9c0161fce9a2_400x400.png",
+            "source": "Reuters",
+            "headline": "Immigration hardliner says Trump team preparing plans for wall, mulling Muslim registry",
+            "spectrum_index": 2
+        }
+    },
+};
 
 var spectrum = {
-    init: function() {
+    init: function(currentUrl) {
         var url = chrome.extension.getURL('html/main.html');
+<<<<<<< HEAD
 
         this._$container = render(url);
         this._$articlesContainer = this._$container.find('#spectrum-articles-container');
@@ -120,6 +198,46 @@ var spectrum = {
         this._hideIfNecessary(false);
 
         this._bindEvents();
+=======
+        var articleData = content[currentUrl];
+
+        if (articleData) {
+            this._$container = render(url);
+            this._$articlesContainer = this._$container.find('#spectrum-articles-container');
+            $('body').append(this._$container);
+
+            this._$popup = new Popup(
+                captionForSpectrumIndex[articleData.spectrum_index],
+                articleData.num_votes,
+                percentageForSpectrumIndex[articleData.spectrum_indexs]
+            );
+            $('body').append(this._$popup.getContainer());
+
+            var leftArticle = new Article(
+                articleData.left_article.image_url,
+                articleData.left_article.source.toUpperCase(),
+                articleData.left_article.headline,
+                percentageForSpectrumIndex[articleData.left_article.spectrum_index],
+                articleData.left_article.url
+            );
+
+            var rightArticle = new Article(
+                articleData.right_article.image_url,
+                articleData.right_article.source.toUpperCase(),
+                articleData.right_article.headline,
+                percentageForSpectrumIndex[articleData.right_article.spectrum_index],
+                articleData.right_article.url
+            );
+
+            this._$articlesContainer.append(leftArticle.getContainer(), rightArticle.getContainer());
+
+            this._$container.hide();
+
+            this._bindEvents();
+        } else {
+            console.log("Unrecognized source: " + currentUrl);
+        }
+>>>>>>> Content hooking
     },
 
     _bindEvents: function() {
@@ -179,5 +297,6 @@ var spectrum = {
 };
 
 $(document).ready(function() {
-    spectrum.init();
+    var currentUrl = window.location.toString();
+    spectrum.init(currentUrl);
 });
