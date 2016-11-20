@@ -117,7 +117,7 @@ var spectrum = {
 
         this._$articlesContainer.append(leftArticle.getContainer(), rightArticle.getContainer());
 
-        this._hideIfNecessary();
+        this._hideIfNecessary(false);
 
         this._bindEvents();
     },
@@ -127,30 +127,54 @@ var spectrum = {
     },
 
     _onScroll: function() {
-        this._hideIfNecessary();
+        this._hideIfNecessary(true);
     },
 
-    _hideIfNecessary: function() {
+    _hideIfNecessary: function(animate) {
         var height = $(document).height();
         var scrollBottom = $(window).scrollTop() + $(window).height();
 
         if (height * 0.75 < scrollBottom) {
-            this.showArticles();
+            this.showArticles(animate);
         } else {
-            this.hideArticles();
+            this.hideArticles(animate);
         }
     },
 
-    hideArticles: function() {
+    hideArticles: function(animate) {
+        if (this._hidden) {
+            return;
+        }
+        this._hidden = true;
+
         this._$popup.css('top', 'auto');
         this._$popup.css('bottom', 0);
-        this._$container.hide();
+
+        if (animate) {
+            this._$container.velocity('transition.slideDownOut', {
+                duration: 300
+            });
+        } else {
+            this._$container.hide();
+        }
     },
 
-    showArticles: function() {
+    showArticles: function(animate) {
+        if (!this._hidden) {
+            return;
+        }
+        this._hidden = false;
+
         this._$popup.css('top', 0);
         this._$popup.css('bottom', 'auto');
-        this._$container.show();
+
+        if (animate) {
+            this._$container.velocity('transition.slideUpIn', {
+                duration: 300
+            });
+        } else {
+            this._$container.show();
+        }
     }
 };
 
