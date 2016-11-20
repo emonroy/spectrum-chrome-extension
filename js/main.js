@@ -165,8 +165,6 @@ var content = {
 var spectrum = {
     init: function(currentUrl) {
         var url = chrome.extension.getURL('html/main.html');
-<<<<<<< HEAD
-
         this._$container = render(url);
         this._$articlesContainer = this._$container.find('#spectrum-articles-container');
         $('body').append(this._$container);
@@ -198,7 +196,6 @@ var spectrum = {
         this._hideIfNecessary(false);
 
         this._bindEvents();
-=======
         var articleData = content[currentUrl];
 
         if (articleData) {
@@ -237,7 +234,6 @@ var spectrum = {
         } else {
             console.log("Unrecognized source: " + currentUrl);
         }
->>>>>>> Content hooking
     },
 
     _bindEvents: function() {
