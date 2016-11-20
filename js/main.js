@@ -16,14 +16,14 @@ var render = function(url, context) {
 
 // Article ---------------------------------------------------------------------
 
-var Article = function(imageUrl, source, headLine, percentage, url) {
+var Article = function(imageUrl, source, headLine, percentage, targetUrl) {
     var url = chrome.extension.getURL("html/article.html");
 
     this._$container = render(url, {
         imageUrl: imageUrl,
         source: source,
         headLine: headLine,
-        target_url: url
+        target_url: targetUrl
     });
     this._$meterThumb = this._$container.find('.spectrum-meter-thumb');
 
