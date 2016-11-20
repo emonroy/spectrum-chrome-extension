@@ -5,7 +5,7 @@
 
     box-sizing: border-box;
     width: 100%;
-    height: 160px;
+    height: 180px;
 
     background: white;
 }
@@ -47,8 +47,6 @@
     color: #DC6E6E;
 }
 
-
-
 #spectrum-articles-container-top-border {
     box-sizing: border-box;
     width: 100%;
@@ -63,7 +61,7 @@
     box-sizing: border-box;
     width: 100%;
 
-    padding: 10px 30px;
+    padding: 10px 40px;
 }
 
 .spectrum-article-container {
@@ -73,7 +71,7 @@
     width: 50%;
     height: 28px;
 
-    padding: 10px 30px;
+    padding: 10px 40px;
 }
 
 .spectrum-meter-container {
@@ -126,14 +124,14 @@
 .spectrum-article-image-container {
     float: left;
 
-    width: 35%;
+    width: 25%;
 
     padding: right: 10px;
 }
 
 .spectrum-article-image {
-    width: 160px;
-    height: 90px;
+    width: 100px;
+    height: 100px;
 }
 
 .spectrum-article-body {
