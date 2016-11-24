@@ -232,12 +232,15 @@ var spectrum = {
         }
         this._hidden = true;
 
+        this._$popup.velocity({
+            bottom: 0
+        });
         this._$popup.css('top', 'auto');
-        this._$popup.css('bottom', 0);
 
         if (animate) {
-            this._$container.velocity('transition.slideDownOut', {
-                duration: 300
+            this._$container.velocity('slideUp', {
+                duration: 300,
+                display: 'none'
             });
         } else {
             this._$container.hide();
@@ -250,12 +253,15 @@ var spectrum = {
         }
         this._hidden = false;
 
-        this._$popup.css('top', 0);
+        this._$popup.velocity({
+            top: 0
+        });
         this._$popup.css('bottom', 'auto');
 
         if (animate) {
-            this._$container.velocity('transition.slideUpIn', {
-                duration: 300
+            this._$container.velocity('slideDown', {
+                duration: 300,
+                display: 'block'
             });
         } else {
             this._$container.show();
